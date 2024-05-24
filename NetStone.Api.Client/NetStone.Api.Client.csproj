@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\NetStone.Common\NetStone.Common\NetStone.Common.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Identity.Client" Version="4.61.0"/>
+    </ItemGroup>
+
 </Project>
