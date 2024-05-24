@@ -1,6 +1,6 @@
 using NetStone.Common.Helper;
 
-namespace NetStone.Api.Client.Helper;
+namespace NetStone.Api.Client.Helpers;
 
 internal static class NetStoneClientConfigurationHelper
 {
