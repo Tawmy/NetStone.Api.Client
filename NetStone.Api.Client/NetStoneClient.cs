@@ -1,6 +1,8 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Microsoft.Identity.Client;
+using NetStone.Api.Client.Exceptions;
 using NetStone.Api.Client.Helper;
 using NetStone.Common.DTOs.Character;
 using NetStone.Common.Exceptions;
@@ -42,14 +44,20 @@ public static class NetStoneClient
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new NotFoundException(); // TODO
+                throw response.StatusCode switch
+                {
+                    HttpStatusCode.NotFound => new NotFoundException(),
+                    HttpStatusCode.InternalServerError => new ApiInternalServerError(response.Content.ToString() ??
+                        response.StatusCode.ToString()),
+                    _ => new Exception(response.StatusCode.ToString())
+                };
             }
 
             var content = await response.Content.ReadFromJsonAsync<CharacterDto>();
 
             if (content is null)
             {
-                throw new NotFoundException(); // TODO
+                throw new ParseFailedException();
             }
 
             return content;
