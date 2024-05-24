@@ -1,5 +1,6 @@
 ﻿using NetStone.Api.Client.Helpers;
 using NetStone.Common.DTOs.Character;
+using NetStone.Common.DTOs.FreeCompany;
 
 namespace NetStone.Api.Client;
 
@@ -33,6 +34,23 @@ public static class NetStoneClient
         {
             var uri = new Uri(CharacterRootUri, $"Mounts/{lodestoneId}");
             return NetStoneApiHelper.GetAsync<CharacterMountOuterDto>(uri);
+        }
+    }
+
+    public static class FreeCompany
+    {
+        private static readonly Uri FreeCompanyRootUri = new(Configuration.ApiRootUri, "FreeCompany/");
+
+        public static Task<FreeCompanyDto> GetAsync(string lodestoneId, int? maxAge = null)
+        {
+            var uri = new Uri(FreeCompanyRootUri, $"{lodestoneId}");
+            return NetStoneApiHelper.GetAsync<FreeCompanyDto>(uri);
+        }
+
+        public static Task<FreeCompanyMembersOuterDto> GetMembersAsync(string lodestoneId, int? maxAge = null)
+        {
+            var uri = new Uri(FreeCompanyRootUri, $"{lodestoneId}");
+            return NetStoneApiHelper.GetAsync<FreeCompanyMembersOuterDto>(uri);
         }
     }
 }
