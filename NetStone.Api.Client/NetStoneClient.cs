@@ -48,6 +48,12 @@ public static class NetStoneClient
     {
         private static readonly Uri FreeCompanyRootUri = new(Configuration.ApiRootUri, "FreeCompany/");
 
+        public static Task<FreeCompanySearchPageDto> SearchAsync(FreeCompanySearchQuery query, short page = 1)
+        {
+            var uri = new Uri(FreeCompanyRootUri, $"Search?page={page}");
+            return NetStoneApiHelper.SearchAsync<FreeCompanySearchPageDto, FreeCompanySearchQuery>(uri, query);
+        }
+
         public static Task<FreeCompanyDto> GetAsync(string lodestoneId, int? maxAge = null)
         {
             var uri = new Uri(FreeCompanyRootUri, $"{lodestoneId}");
