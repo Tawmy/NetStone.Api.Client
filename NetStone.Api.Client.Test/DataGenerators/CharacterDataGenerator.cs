@@ -1,8 +1,8 @@
 namespace NetStone.Api.Client.Test.DataGenerators;
 
-internal class CharacterTestsDataGenerator : TheoryData<string>
+internal class CharacterDataGenerator : TheoryData<string>
 {
-    public CharacterTestsDataGenerator()
+    public CharacterDataGenerator()
     {
         Add("28812634"); // Alyx Bergen, Phoenix
         Add("28915387"); // Halvar Ragnar, Phoenix

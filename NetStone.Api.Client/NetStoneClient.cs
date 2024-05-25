@@ -1,6 +1,7 @@
 ﻿using NetStone.Api.Client.Helpers;
 using NetStone.Common.DTOs.Character;
 using NetStone.Common.DTOs.FreeCompany;
+using NetStone.Common.Queries;
 
 namespace NetStone.Api.Client;
 
@@ -11,6 +12,12 @@ public static class NetStoneClient
     public static class Character
     {
         private static readonly Uri CharacterRootUri = new(Configuration.ApiRootUri, "Character/");
+
+        public static Task<CharacterSearchPageDto> SearchAsync(CharacterSearchQuery query, short page = 1)
+        {
+            var uri = new Uri(CharacterRootUri, $"Search?page={page}");
+            return NetStoneApiHelper.SearchAsync<CharacterSearchPageDto, CharacterSearchQuery>(uri, query);
+        }
 
         public static Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null)
         {
