@@ -22,25 +22,25 @@ public static class NetStoneClient
         public static Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null)
         {
             var uri = new Uri(CharacterRootUri, $"{lodestoneId}");
-            return NetStoneApiHelper.GetAsync<CharacterDto>(uri);
+            return NetStoneApiHelper.GetAsync<CharacterDto>(uri, maxAge);
         }
 
         public static Task<CharacterClassJobOuterDto> GetClassJobsAsync(string lodestoneId, int? maxAge = null)
         {
             var uri = new Uri(CharacterRootUri, $"ClassJobs/{lodestoneId}");
-            return NetStoneApiHelper.GetAsync<CharacterClassJobOuterDto>(uri);
+            return NetStoneApiHelper.GetAsync<CharacterClassJobOuterDto>(uri, maxAge);
         }
 
         public static Task<CharacterMinionOuterDto> GetMinionsAsync(string lodestoneId, int? maxAge = null)
         {
             var uri = new Uri(CharacterRootUri, $"Minions/{lodestoneId}");
-            return NetStoneApiHelper.GetAsync<CharacterMinionOuterDto>(uri);
+            return NetStoneApiHelper.GetAsync<CharacterMinionOuterDto>(uri, maxAge);
         }
 
         public static Task<CharacterMountOuterDto> GetMountsAsync(string lodestoneId, int? maxAge = null)
         {
             var uri = new Uri(CharacterRootUri, $"Mounts/{lodestoneId}");
-            return NetStoneApiHelper.GetAsync<CharacterMountOuterDto>(uri);
+            return NetStoneApiHelper.GetAsync<CharacterMountOuterDto>(uri, maxAge);
         }
     }
 
@@ -57,13 +57,13 @@ public static class NetStoneClient
         public static Task<FreeCompanyDto> GetAsync(string lodestoneId, int? maxAge = null)
         {
             var uri = new Uri(FreeCompanyRootUri, $"{lodestoneId}");
-            return NetStoneApiHelper.GetAsync<FreeCompanyDto>(uri);
+            return NetStoneApiHelper.GetAsync<FreeCompanyDto>(uri, maxAge);
         }
 
         public static Task<FreeCompanyMembersOuterDto> GetMembersAsync(string lodestoneId, int? maxAge = null)
         {
             var uri = new Uri(FreeCompanyRootUri, $"{lodestoneId}");
-            return NetStoneApiHelper.GetAsync<FreeCompanyMembersOuterDto>(uri);
+            return NetStoneApiHelper.GetAsync<FreeCompanyMembersOuterDto>(uri, maxAge);
         }
     }
 }

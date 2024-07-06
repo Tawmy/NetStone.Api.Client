@@ -23,8 +23,13 @@ internal static class NetStoneApiHelper
     private static readonly JsonSerializerOptions SearchOptions = new()
         { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-    public static async Task<T> GetAsync<T>(Uri uri)
+    public static async Task<T> GetAsync<T>(Uri uri, int? maxAge)
     {
+        if (maxAge is not null)
+        {
+            uri = new Uri($"{uri}?maxAge={maxAge}");
+        }
+
         var request = new HttpRequestMessage(HttpMethod.Get, uri);
 
         request.Headers.Authorization = await GetAuthorizationHeader();
