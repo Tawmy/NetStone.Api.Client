@@ -1,4 +1,4 @@
-using NetStone.Common.Helper;
+using NetStone.Common.Helpers;
 
 namespace NetStone.Api.Client.Helpers;
 
