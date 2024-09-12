@@ -42,6 +42,12 @@ public static class NetStoneClient
             var uri = new Uri(CharacterRootUri, $"Mounts/{lodestoneId}");
             return NetStoneApiHelper.GetAsync<CharacterMountOuterDto>(uri, maxAge);
         }
+
+        public static Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null)
+        {
+            var uri = new Uri(CharacterRootUri, $"Achievements/{lodestoneId}");
+            return NetStoneApiHelper.GetAsync<CharacterAchievementOuterDto>(uri, maxAge);
+        }
     }
 
     public static class FreeCompany
