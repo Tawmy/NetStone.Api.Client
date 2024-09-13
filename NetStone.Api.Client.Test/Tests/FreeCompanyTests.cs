@@ -18,7 +18,7 @@ public class FreeCompanyTests
     [ClassData(typeof(FreeCompanyTestsDataGenerator))]
     public async Task ClientIsReceivingFreeCompanies(string lodestoneId)
     {
-        var result = await NetStoneClient.FreeCompany.GetAsync(lodestoneId);
+        var result = await NetStoneClient.FreeCompany.GetAsync(lodestoneId, 0);
         Assert.NotNull(result);
     }
 
@@ -26,7 +26,7 @@ public class FreeCompanyTests
     [ClassData(typeof(FreeCompanyTestsDataGenerator))]
     public async Task ClientIsReceivingFreeCompanyMembers(string lodestoneId)
     {
-        var result = await NetStoneClient.FreeCompany.GetMembersAsync(lodestoneId);
+        var result = await NetStoneClient.FreeCompany.GetMembersAsync(lodestoneId, 0);
         Assert.NotNull(result);
     }
 }

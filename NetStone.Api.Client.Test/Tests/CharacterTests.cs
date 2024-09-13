@@ -19,21 +19,21 @@ public class CharacterTests
     [ClassData(typeof(CharacterDataGenerator))]
     public async Task ClientIsReceivingCharacters(string lodestoneId)
     {
-        var result = await NetStoneClient.Character.GetAsync(lodestoneId);
+        var result = await NetStoneClient.Character.GetAsync(lodestoneId, 0);
         Assert.NotNull(result);
     }
 
     [Fact]
     public async Task ClientIsThrowingNotFoundException()
     {
-        await Assert.ThrowsAsync<NotFoundException>(async () => await NetStoneClient.Character.GetAsync("99999999"));
+        await Assert.ThrowsAsync<NotFoundException>(async () => await NetStoneClient.Character.GetAsync("99999999", 0));
     }
 
     [Theory]
     [ClassData(typeof(CharacterDataGenerator))]
     public async Task ClientIsReceivingCharacterClassJobs(string lodestoneId)
     {
-        var result = await NetStoneClient.Character.GetClassJobsAsync(lodestoneId);
+        var result = await NetStoneClient.Character.GetClassJobsAsync(lodestoneId, 0);
         Assert.NotNull(result);
     }
 
@@ -45,11 +45,11 @@ public class CharacterTests
         {
             // test character has no minions
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await NetStoneClient.Character.GetMinionsAsync(lodestoneId));
+                await NetStoneClient.Character.GetMinionsAsync(lodestoneId, 0));
             return;
         }
 
-        var result = await NetStoneClient.Character.GetMinionsAsync(lodestoneId);
+        var result = await NetStoneClient.Character.GetMinionsAsync(lodestoneId, 0);
         Assert.NotNull(result);
     }
 
@@ -61,11 +61,11 @@ public class CharacterTests
         {
             // test characters have no mounts
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await NetStoneClient.Character.GetMountsAsync(lodestoneId));
+                await NetStoneClient.Character.GetMountsAsync(lodestoneId, 0));
             return;
         }
 
-        var result = await NetStoneClient.Character.GetMountsAsync(lodestoneId);
+        var result = await NetStoneClient.Character.GetMountsAsync(lodestoneId, 0);
         Assert.NotNull(result);
     }
 
@@ -73,7 +73,7 @@ public class CharacterTests
     [ClassData(typeof(CharacterDataGenerator))]
     public async Task ClientIsReceivingCharacterAchievements(string lodestoneId)
     {
-        var result = await NetStoneClient.Character.GetAchievementsAsync(lodestoneId);
+        var result = await NetStoneClient.Character.GetAchievementsAsync(lodestoneId, 0);
         Assert.NotNull(result);
 
         // achievements seem to be private by default, so most of these lists are empty. test the ones that are not.
