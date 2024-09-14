@@ -10,10 +10,8 @@ using NetStone.Common.Exceptions;
 
 namespace NetStone.Api.Client.Helpers;
 
-internal static class NetStoneApiHelper
+internal class NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
 {
-    private static readonly NetStoneClientConfiguration Configuration = NetStoneClientConfigurationHelper.Get();
-
     private static readonly SocketsHttpHandler Handler = new() { PooledConnectionLifetime = TimeSpan.FromMinutes(60) };
     private static readonly HttpClient HttpClient = new(Handler);
 
@@ -23,7 +21,7 @@ internal static class NetStoneApiHelper
     private static readonly JsonSerializerOptions SearchOptions = new()
         { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-    public static async Task<T> GetAsync<T>(Uri uri, int? maxAge)
+    public async Task<T> GetAsync<T>(Uri uri, int? maxAge)
     {
         if (maxAge is not null)
         {
@@ -37,7 +35,7 @@ internal static class NetStoneApiHelper
         return await SendAndHandleResponseAsync<T>(request);
     }
 
-    public static async Task<T> SearchAsync<T, TQuery>(Uri uri, TQuery query)
+    public async Task<T> SearchAsync<T, TQuery>(Uri uri, TQuery query)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, uri);
 
@@ -49,7 +47,7 @@ internal static class NetStoneApiHelper
         return await SendAndHandleResponseAsync<T>(request);
     }
 
-    private static async Task<T> SendAndHandleResponseAsync<T>(HttpRequestMessage request)
+    private async Task<T> SendAndHandleResponseAsync<T>(HttpRequestMessage request)
     {
         HttpResponseMessage? response = null;
 
@@ -95,7 +93,7 @@ internal static class NetStoneApiHelper
         return content;
     }
 
-    private static async Task<AuthenticationHeaderValue> GetAuthorizationHeader(bool forceRefresh = false)
+    private async Task<AuthenticationHeaderValue> GetAuthorizationHeader(bool forceRefresh = false)
     {
         await AccessTokenLock.WaitAsync();
         try
@@ -115,14 +113,14 @@ internal static class NetStoneApiHelper
         return new AuthenticationHeaderValue("Bearer", _accessToken.AccessToken);
     }
 
-    private static async Task<AuthenticationResult> GetNewAccessTokenAsync()
+    private async Task<AuthenticationResult> GetNewAccessTokenAsync()
     {
         var app = ConfidentialClientApplicationBuilder
-            .Create(Configuration.AuthClientId)
-            .WithClientSecret(Configuration.AuthClientSecret)
-            .WithOidcAuthority(Configuration.AuthAuthority.ToString())
+            .Create(configuration.AuthClientId)
+            .WithClientSecret(configuration.AuthClientSecret)
+            .WithOidcAuthority(configuration.AuthAuthority.ToString())
             .Build();
 
-        return await app.AcquireTokenForClient(Configuration.AuthScopes).ExecuteAsync();
+        return await app.AcquireTokenForClient(configuration.AuthScopes).ExecuteAsync();
     }
 }

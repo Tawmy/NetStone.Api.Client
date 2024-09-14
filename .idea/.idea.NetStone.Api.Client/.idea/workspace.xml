@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="509ec278-87b2-49a7-aafc-679c428ef682" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/NetStone.Api.Client/NetStoneApiClientConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client.Test/Tests/CharacterTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NetStone.Api.Client.Test/Tests/CharacterTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client.Test/Tests/FreeCompanyTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NetStone.Api.Client.Test/Tests/FreeCompanyTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/NetStone.Api.Client.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client/EnvironmentVariables.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NetStone.Api.Client.Test/EnvironmentVariables.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client/Helpers/NetStoneApiHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NetStone.Api.Client/Helpers/NetStoneApiHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client/Helpers/NetStoneClientConfigurationHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NetStone.Api.Client.Test/Helpers/NetStoneApiClientConfigurationHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client/NetStoneClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NetStone.Api.Client/NetStoneApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetStone.Api.Client/NetStoneClientConfiguration.cs" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="autoShow" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/276a747bca74496a911ac559b6d1c9001d8600/63/67822132/MediaTypeHeaderValue.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7599c90a3f854390a3bacf586f3d6c9b3fa00/96/83afa404/Uri.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dcf1633545879947ecc3ba73dea66e7846b7ace9fe4bfabc9999753d0ac89b3/IConfidentialClientApplication.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f381f2fe71db1787965c77520802b2f511a4ee5b264ec1ead55bb7853d6adf/ConfidentialClientApplicationBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2gj8VhHBVS97JxKKv6crPu12nEU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;00e4bebf-2c55-4014-8a97-205f068a9f9e.executor&quot;: &quot;Debug&quot;,
+    &quot;0ff635ca-7d46-4b8a-bc31-38c6992f7914.executor&quot;: &quot;Debug&quot;,
+    &quot;107b0d1a-70da-4934-8c22-c4604791ddc5.executor&quot;: &quot;Debug&quot;,
+    &quot;1937688b-3120-4f22-a735-9e95e8ddc79c.executor&quot;: &quot;Debug&quot;,
+    &quot;2572505a-c2fe-40e9-b12e-0a629c051398.executor&quot;: &quot;Run&quot;,
+    &quot;2c1ac713-c0da-4af6-8206-d4aff19a6fbd.executor&quot;: &quot;Debug&quot;,
+    &quot;35aaa5a6-8515-4a6a-bfa7-8f757e72ea3b.executor&quot;: &quot;Debug&quot;,
+    &quot;60a57b7d-532f-437b-b931-50f0b3d0e2ee.executor&quot;: &quot;Debug&quot;,
+    &quot;66b1373a-c6de-452e-9451-37f1c017e0c1.executor&quot;: &quot;Debug&quot;,
+    &quot;75ee94ae-bf1c-4a22-884a-afb2fceecdf3.executor&quot;: &quot;Debug&quot;,
+    &quot;8fba09a2-12e4-40cc-b9c1-523720525f89.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;a1db3a0a-c021-46dd-8ad7-b98c334b13d0.executor&quot;: &quot;Debug&quot;,
+    &quot;a1f50bb5-c2cd-4be4-95a3-a6335c6a23d4.executor&quot;: &quot;Debug&quot;,
+    &quot;ad618f0e-0d1b-46e8-beeb-472406db1f4a.executor&quot;: &quot;Run&quot;,
+    &quot;d6c90d8f-8139-4420-b194-19e9fdff7a43.executor&quot;: &quot;Debug&quot;,
+    &quot;e1da7a4f-d4f7-4538-9d50-8ab7ea981870.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;RiderTestRunnerUnitTestingPageId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="509ec278-87b2-49a7-aafc-679c428ef682" name="Changes" comment="" />
+      <created>1716199652043</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716199652043</updated>
+      <workItem from="1716199653299" duration="11828000" />
+      <workItem from="1716561667948" duration="647000" />
+      <workItem from="1716562341404" duration="10616000" />
+      <workItem from="1716639579157" duration="863000" />
+      <workItem from="1716643350966" duration="1178000" />
+      <workItem from="1716824963582" duration="723000" />
+      <workItem from="1717055284076" duration="2195000" />
+      <workItem from="1719952097188" duration="4174000" />
+      <workItem from="1720270614367" duration="2377000" />
+      <workItem from="1720344409490" duration="822000" />
+      <workItem from="1725981710801" duration="848000" />
+      <workItem from="1726161151009" duration="2197000" />
+      <workItem from="1726258047394" duration="2447000" />
+      <workItem from="1726264567251" duration="1389000" />
+      <workItem from="1726302387021" duration="1619000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="dotnet:Microsoft.Identity.Client" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <condition disabled="true" expression="lodestoneId == &quot;16303557&quot;" language="C#" />
+          <url>file://$PROJECT_DIR$/NetStone.Api.Client.Test/Tests/CharacterTests.cs</url>
+          <line>40</line>
+          <properties documentPath="$PROJECT_DIR$/NetStone.Api.Client.Test/Tests/CharacterTests.cs" containingFunctionPresentation="Method 'ClientIsReceivingCharacterClassJobs'">
+            <startOffsets>
+              <option value="1391" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1414" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="DotNet Exception Breakpoints">
+          <properties justMyCode="true" />
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="RiderUnitTests">
+        <watch expression="response.Content.ReadAsStringAsync()" language="C#" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

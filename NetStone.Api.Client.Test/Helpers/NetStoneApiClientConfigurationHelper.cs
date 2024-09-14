@@ -1,10 +1,10 @@
 using NetStone.Common.Helpers;
 
-namespace NetStone.Api.Client.Helpers;
+namespace NetStone.Api.Client.Test.Helpers;
 
-internal static class NetStoneClientConfigurationHelper
+internal static class NetStoneApiClientConfigurationHelper
 {
-    public static NetStoneClientConfiguration Get()
+    public static NetStoneApiClientConfiguration Get()
     {
         var apiRootUri = EnvironmentVariableHelper.Get<Uri>(EnvironmentVariables.ApiRootUri);
         var authAuthority = EnvironmentVariableHelper.Get<Uri>(EnvironmentVariables.AuthAuthority);
@@ -14,7 +14,7 @@ internal static class NetStoneClientConfigurationHelper
         var authScopesArray =
             authScopes.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
-        return new NetStoneClientConfiguration(apiRootUri, authAuthority, authClientId, authClientSecret,
+        return new NetStoneApiClientConfiguration(apiRootUri, authAuthority, authClientId, authClientSecret,
             authScopesArray);
     }
 }

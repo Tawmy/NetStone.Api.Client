@@ -1,4 +1,4 @@
-namespace NetStone.Api.Client;
+namespace NetStone.Api.Client.Test;
 
 internal static class EnvironmentVariables
 {
