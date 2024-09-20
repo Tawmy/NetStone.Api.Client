@@ -28,16 +28,16 @@ internal class CharacterRequests(NetStoneApiClientConfiguration configuration) :
         return _apiHelper.GetAsync<CharacterClassJobOuterDto>(uri, maxAge);
     }
 
-    public Task<CharacterMinionOuterDto> GetMinionsAsync(string lodestoneId, int? maxAge = null)
+    public Task<CollectionDto<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null)
     {
         var uri = new Uri(_characterRootUri, $"Minions/{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterMinionOuterDto>(uri, maxAge);
+        return _apiHelper.GetAsync<CollectionDto<CharacterMinionDto>>(uri, maxAge);
     }
 
-    public Task<CharacterMountOuterDto> GetMountsAsync(string lodestoneId, int? maxAge = null)
+    public Task<CollectionDto<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null)
     {
         var uri = new Uri(_characterRootUri, $"Mounts/{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterMountOuterDto>(uri, maxAge);
+        return _apiHelper.GetAsync<CollectionDto<CharacterMountDto>>(uri, maxAge);
     }
 
     public Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null)
