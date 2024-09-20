@@ -10,21 +10,24 @@ internal class FreeCompanyRequests(NetStoneApiClientConfiguration configuration)
     private readonly NetStoneApiHelper _apiHelper = new(configuration);
     private readonly Uri _freeCompanyRootUri = new(configuration.ApiRootUri, "FreeCompany/");
 
-    public Task<FreeCompanySearchPageDto> SearchAsync(FreeCompanySearchQuery query, short page = 1)
+    public Task<FreeCompanySearchPageDto> SearchAsync(FreeCompanySearchQuery query, short page = 1,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_freeCompanyRootUri, $"Search?page={page}");
-        return _apiHelper.SearchAsync<FreeCompanySearchPageDto, FreeCompanySearchQuery>(uri, query);
+        return _apiHelper.SearchAsync<FreeCompanySearchPageDto, FreeCompanySearchQuery>(uri, query, cancellationToken);
     }
 
-    public Task<FreeCompanyDto> GetAsync(string lodestoneId, int? maxAge = null)
+    public Task<FreeCompanyDto> GetAsync(string lodestoneId, int? maxAge = null,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_freeCompanyRootUri, $"{lodestoneId}");
-        return _apiHelper.GetAsync<FreeCompanyDto>(uri, maxAge);
+        return _apiHelper.GetAsync<FreeCompanyDto>(uri, maxAge, cancellationToken);
     }
 
-    public Task<FreeCompanyMembersOuterDto> GetMembersAsync(string lodestoneId, int? maxAge = null)
+    public Task<FreeCompanyMembersOuterDto> GetMembersAsync(string lodestoneId, int? maxAge = null,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_freeCompanyRootUri, $"{lodestoneId}");
-        return _apiHelper.GetAsync<FreeCompanyMembersOuterDto>(uri, maxAge);
+        return _apiHelper.GetAsync<FreeCompanyMembersOuterDto>(uri, maxAge, cancellationToken);
     }
 }

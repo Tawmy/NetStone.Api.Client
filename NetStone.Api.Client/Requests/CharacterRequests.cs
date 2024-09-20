@@ -10,39 +10,45 @@ internal class CharacterRequests(NetStoneApiClientConfiguration configuration) :
     private readonly NetStoneApiHelper _apiHelper = new(configuration);
     private readonly Uri _characterRootUri = new(configuration.ApiRootUri, "Character/");
 
-    public Task<CharacterSearchPageDto> SearchAsync(CharacterSearchQuery query, short page = 1)
+    public Task<CharacterSearchPageDto> SearchAsync(CharacterSearchQuery query, short page = 1,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"Search?page={page}");
-        return _apiHelper.SearchAsync<CharacterSearchPageDto, CharacterSearchQuery>(uri, query);
+        return _apiHelper.SearchAsync<CharacterSearchPageDto, CharacterSearchQuery>(uri, query, cancellationToken);
     }
 
-    public Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null)
+    public Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterDto>(uri, maxAge);
+        return _apiHelper.GetAsync<CharacterDto>(uri, maxAge, cancellationToken);
     }
 
-    public Task<CharacterClassJobOuterDto> GetClassJobsAsync(string lodestoneId, int? maxAge = null)
+    public Task<CharacterClassJobOuterDto> GetClassJobsAsync(string lodestoneId, int? maxAge = null,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"ClassJobs/{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterClassJobOuterDto>(uri, maxAge);
+        return _apiHelper.GetAsync<CharacterClassJobOuterDto>(uri, maxAge, cancellationToken);
     }
 
-    public Task<CollectionDto<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null)
+    public Task<CollectionDto<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"Minions/{lodestoneId}");
-        return _apiHelper.GetAsync<CollectionDto<CharacterMinionDto>>(uri, maxAge);
+        return _apiHelper.GetAsync<CollectionDto<CharacterMinionDto>>(uri, maxAge, cancellationToken);
     }
 
-    public Task<CollectionDto<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null)
+    public Task<CollectionDto<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"Mounts/{lodestoneId}");
-        return _apiHelper.GetAsync<CollectionDto<CharacterMountDto>>(uri, maxAge);
+        return _apiHelper.GetAsync<CollectionDto<CharacterMountDto>>(uri, maxAge, cancellationToken);
     }
 
-    public Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null)
+    public Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null,
+        CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"Achievements/{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterAchievementOuterDto>(uri, maxAge);
+        return _apiHelper.GetAsync<CharacterAchievementOuterDto>(uri, maxAge, cancellationToken);
     }
 }
