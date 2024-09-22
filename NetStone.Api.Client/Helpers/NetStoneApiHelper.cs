@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Identity.Client;
 using NetStone.Api.Client.Exceptions;
+using NetStone.Api.Client.Extensions;
 using NetStone.Common.Exceptions;
 
 namespace NetStone.Api.Client.Helpers;
@@ -31,6 +32,7 @@ internal class NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
         var request = new HttpRequestMessage(HttpMethod.Get, uri);
 
         request.Headers.Authorization = await GetAuthorizationHeader(false, cancellationToken);
+        request.Headers.AddApiVersion("2");
 
         return await SendAndHandleResponseAsync<T>(request, cancellationToken);
     }
@@ -40,6 +42,7 @@ internal class NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
         var request = new HttpRequestMessage(HttpMethod.Post, uri);
 
         request.Headers.Authorization = await GetAuthorizationHeader(false, cancellationToken);
+        request.Headers.AddApiVersion("2");
 
         var queryStr = JsonSerializer.Serialize(query, SearchOptions);
         request.Content = new StringContent(queryStr, Encoding.UTF8, "application/json");
