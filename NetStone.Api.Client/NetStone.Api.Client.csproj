@@ -4,7 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyVersion>2.0.1</AssemblyVersion>
+        <AssemblyVersion>2.0.2</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Identity.Client" Version="4.64.1"/>
+        <PackageReference Include="Microsoft.Identity.Client" Version="4.65.0"/>
     </ItemGroup>
 
 </Project>
