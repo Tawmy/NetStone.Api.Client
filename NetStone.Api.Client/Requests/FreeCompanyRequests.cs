@@ -27,7 +27,7 @@ internal class FreeCompanyRequests(NetStoneApiClientConfiguration configuration)
     public Task<FreeCompanyMembersOuterDto> GetMembersAsync(string lodestoneId, int? maxAge = null,
         CancellationToken cancellationToken = default)
     {
-        var uri = new Uri(_freeCompanyRootUri, $"{lodestoneId}");
+        var uri = new Uri(_freeCompanyRootUri, $"Members/{lodestoneId}");
         return _apiHelper.GetAsync<FreeCompanyMembersOuterDto>(uri, maxAge, cancellationToken);
     }
 }
