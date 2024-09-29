@@ -32,5 +32,6 @@ public class FreeCompanyTests
     {
         var result = await Client.FreeCompany.GetMembersAsync(lodestoneId, 0);
         Assert.NotNull(result);
+        Assert.NotEmpty(result.Members);
     }
 }
