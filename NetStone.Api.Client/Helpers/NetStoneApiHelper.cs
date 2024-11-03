@@ -8,10 +8,13 @@ using Microsoft.Identity.Client;
 using NetStone.Api.Client.Exceptions;
 using NetStone.Api.Client.Extensions;
 using NetStone.Common.Exceptions;
+using Polly;
+using Polly.Retry;
+using Polly.Timeout;
 
 namespace NetStone.Api.Client.Helpers;
 
-internal class NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
+internal class NetStoneApiHelper
 {
     private static readonly SocketsHttpHandler Handler = new() { PooledConnectionLifetime = TimeSpan.FromMinutes(60) };
     private static readonly HttpClient HttpClient = new(Handler);
@@ -22,6 +25,49 @@ internal class NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
     private static readonly JsonSerializerOptions SearchOptions = new()
         { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
+    private readonly NetStoneApiClientConfiguration _configuration;
+    private readonly ResiliencePipeline<HttpResponseMessage> _httpClientPipeline;
+
+    public NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
+    {
+        _configuration = configuration;
+        _httpClientPipeline = CreateResiliencePipeline();
+    }
+
+    private ResiliencePipeline<HttpResponseMessage> CreateResiliencePipeline()
+    {
+        var builder = new ResiliencePipelineBuilder<HttpResponseMessage>();
+
+        builder.AddRetry(new RetryStrategyOptions<HttpResponseMessage>
+        {
+            ShouldHandle = new PredicateBuilder<HttpResponseMessage>().Handle<TimeoutRejectedException>().HandleResult(
+                static result => result is
+                {
+                    IsSuccessStatusCode: false,
+                    StatusCode: not HttpStatusCode.InternalServerError and not HttpStatusCode.NotFound
+                }),
+            MaxRetryAttempts = 2,
+            BackoffType = DelayBackoffType.Constant,
+            Delay = TimeSpan.FromMilliseconds(500),
+            UseJitter = true
+        });
+
+        builder.AddRetry(new RetryStrategyOptions<HttpResponseMessage>
+        {
+            ShouldHandle = new PredicateBuilder<HttpResponseMessage>().HandleResult(static result =>
+                result.StatusCode == HttpStatusCode.Unauthorized),
+            MaxRetryAttempts = 1,
+            BackoffType = DelayBackoffType.Constant,
+            Delay = TimeSpan.FromMilliseconds(100),
+            UseJitter = true,
+            OnRetry = async args => await RetrieveNewAccessTokenAsync(args.Context.CancellationToken)
+        });
+
+        builder.AddTimeout(TimeSpan.FromSeconds(30));
+
+        return builder.Build();
+    }
+
     public async Task<T> GetAsync<T>(Uri uri, int? maxAge, CancellationToken cancellationToken)
     {
         if (maxAge is not null)
@@ -29,60 +75,53 @@ internal class NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
             uri = new Uri($"{uri}?maxAge={maxAge}");
         }
 
-        var request = new HttpRequestMessage(HttpMethod.Get, uri);
-
-        request.Headers.Authorization = await GetAuthorizationHeader(false, cancellationToken);
-        request.Headers.AddApiVersion("2");
-
-        return await SendAndHandleResponseAsync<T>(request, cancellationToken);
+        return await SendAndHandleResponseAsync<T>(() => new HttpRequestMessage(HttpMethod.Get, uri),
+            cancellationToken);
     }
 
     public async Task<T> SearchAsync<T, TQuery>(Uri uri, TQuery query, CancellationToken cancellationToken)
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, uri);
-
-        request.Headers.Authorization = await GetAuthorizationHeader(false, cancellationToken);
-        request.Headers.AddApiVersion("2");
-
         var queryStr = JsonSerializer.Serialize(query, SearchOptions);
-        request.Content = new StringContent(queryStr, Encoding.UTF8, "application/json");
 
-        return await SendAndHandleResponseAsync<T>(request, cancellationToken);
+        return await SendAndHandleResponseAsync<T>(() =>
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, uri);
+            request.Content = new StringContent(queryStr, Encoding.UTF8, "application/json");
+            return request;
+        }, cancellationToken);
     }
 
-    private async Task<T> SendAndHandleResponseAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken)
+    private async Task<T> SendAndHandleResponseAsync<T>(Func<HttpRequestMessage> createRequestFunc,
+        CancellationToken cancellationToken)
     {
-        HttpResponseMessage? response = null;
-
-        for (var i = 0; i < 2; i++)
+        if (_accessToken is null)
         {
-            response = await HttpClient.SendAsync(request, cancellationToken);
-
-            if (response.IsSuccessStatusCode)
-            {
-                break;
-            }
-
-            if (response.StatusCode == HttpStatusCode.Unauthorized && i == 0)
-            {
-                // access token was revoked. get a new one and try again.
-                request.Headers.Authorization = await GetAuthorizationHeader(true, cancellationToken);
-            }
-            else
-            {
-                throw response.StatusCode switch
-                {
-                    HttpStatusCode.NotFound => new NotFoundException(),
-                    HttpStatusCode.InternalServerError => new ApiInternalServerError(response.Content.ToString() ??
-                        response.StatusCode.ToString()),
-                    _ => new Exception(response.StatusCode.ToString())
-                };
-            }
+            await RetrieveNewAccessTokenAsync(cancellationToken);
         }
+
+        var response = await _httpClientPipeline.ExecuteAsync<HttpResponseMessage>(token =>
+        {
+            // requestMessage must be re-created for each request
+            var request = createRequestFunc();
+            request.Headers.AddApiVersion("2");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken!.AccessToken);
+            return new ValueTask<HttpResponseMessage>(HttpClient.SendAsync(request, token));
+        }, cancellationToken);
 
         if (response is null)
         {
             throw new Exception(response?.StatusCode.ToString() ?? "API Response was null.");
+        }
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw response.StatusCode switch
+            {
+                HttpStatusCode.NotFound => new NotFoundException(),
+                HttpStatusCode.InternalServerError => new ApiInternalServerError(
+                    await response.Content.ReadAsStringAsync(cancellationToken)),
+                _ => new Exception(response.StatusCode.ToString())
+            };
         }
 
         var content = await response.Content.ReadFromJsonAsync<T>(cancellationToken);
@@ -96,35 +135,22 @@ internal class NetStoneApiHelper(NetStoneApiClientConfiguration configuration)
         return content;
     }
 
-    private async Task<AuthenticationHeaderValue> GetAuthorizationHeader(bool forceRefresh,
-        CancellationToken cancellationToken)
+    private async Task RetrieveNewAccessTokenAsync(CancellationToken cancellationToken)
     {
         await AccessTokenLock.WaitAsync(cancellationToken);
         try
         {
-            if (_accessToken is null || _accessToken.ExpiresOn.UtcDateTime < DateTime.UtcNow.AddSeconds(-30) ||
-                forceRefresh)
-            {
-                // get new access token if none exists, if it's expired, or if it expires within the next 30 seconds
-                _accessToken = await GetNewAccessTokenAsync(cancellationToken);
-            }
+            var app = ConfidentialClientApplicationBuilder
+                .Create(_configuration.AuthClientId)
+                .WithClientSecret(_configuration.AuthClientSecret)
+                .WithOidcAuthority(_configuration.AuthAuthority.ToString())
+                .Build();
+
+            _accessToken = await app.AcquireTokenForClient(_configuration.AuthScopes).ExecuteAsync(cancellationToken);
         }
         finally
         {
             AccessTokenLock.Release();
         }
-
-        return new AuthenticationHeaderValue("Bearer", _accessToken.AccessToken);
-    }
-
-    private async Task<AuthenticationResult> GetNewAccessTokenAsync(CancellationToken cancellationToken)
-    {
-        var app = ConfidentialClientApplicationBuilder
-            .Create(configuration.AuthClientId)
-            .WithClientSecret(configuration.AuthClientSecret)
-            .WithOidcAuthority(configuration.AuthAuthority.ToString())
-            .Build();
-
-        return await app.AcquireTokenForClient(configuration.AuthScopes).ExecuteAsync(cancellationToken);
     }
 }
