@@ -17,38 +17,38 @@ internal class CharacterRequests(NetStoneApiClientConfiguration configuration) :
         return _apiHelper.SearchAsync<CharacterSearchPageDto, CharacterSearchQuery>(uri, query, cancellationToken);
     }
 
-    public Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null,
+    public Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null, bool useFallback = false,
         CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterDto>(uri, maxAge, cancellationToken);
+        return _apiHelper.GetAsync<CharacterDto>(uri, maxAge, useFallback, cancellationToken);
     }
 
     public Task<CharacterClassJobOuterDto> GetClassJobsAsync(string lodestoneId, int? maxAge = null,
-        CancellationToken cancellationToken = default)
+        bool useFallback = false, CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"ClassJobs/{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterClassJobOuterDto>(uri, maxAge, cancellationToken);
+        return _apiHelper.GetAsync<CharacterClassJobOuterDto>(uri, maxAge, useFallback, cancellationToken);
     }
 
     public Task<CollectionDto<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null,
-        CancellationToken cancellationToken = default)
+        bool useFallback = false, CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"Minions/{lodestoneId}");
-        return _apiHelper.GetAsync<CollectionDto<CharacterMinionDto>>(uri, maxAge, cancellationToken);
+        return _apiHelper.GetAsync<CollectionDto<CharacterMinionDto>>(uri, maxAge, useFallback, cancellationToken);
     }
 
     public Task<CollectionDto<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null,
-        CancellationToken cancellationToken = default)
+        bool useFallback = false, CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"Mounts/{lodestoneId}");
-        return _apiHelper.GetAsync<CollectionDto<CharacterMountDto>>(uri, maxAge, cancellationToken);
+        return _apiHelper.GetAsync<CollectionDto<CharacterMountDto>>(uri, maxAge, useFallback, cancellationToken);
     }
 
     public Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null,
-        CancellationToken cancellationToken = default)
+        bool useFallback = false, CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_characterRootUri, $"Achievements/{lodestoneId}");
-        return _apiHelper.GetAsync<CharacterAchievementOuterDto>(uri, maxAge, cancellationToken);
+        return _apiHelper.GetAsync<CharacterAchievementOuterDto>(uri, maxAge, useFallback, cancellationToken);
     }
 }

@@ -68,11 +68,17 @@ internal class NetStoneApiHelper
         return builder.Build();
     }
 
-    public async Task<T> GetAsync<T>(Uri uri, int? maxAge, CancellationToken cancellationToken)
+    public async Task<T> GetAsync<T>(Uri uri, int? maxAge, bool useFallback, CancellationToken cancellationToken)
     {
         if (maxAge is not null)
         {
             uri = new Uri($"{uri}?maxAge={maxAge}");
+        }
+
+        if (useFallback)
+        {
+            // TODO improve this bit, this is whack
+            uri = new Uri($"{uri}{(uri.Query.Contains('?') ? "&" : "?")}useFallback=true");
         }
 
         return await SendAndHandleResponseAsync<T>(() => new HttpRequestMessage(HttpMethod.Get, uri),
