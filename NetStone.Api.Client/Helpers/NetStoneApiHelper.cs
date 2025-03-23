@@ -109,7 +109,7 @@ internal class NetStoneApiHelper
         {
             // requestMessage must be re-created for each request
             var request = createRequestFunc();
-            request.Headers.AddApiVersion("2");
+            request.Headers.AddApiVersion("3");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken!.AccessToken);
             return new ValueTask<HttpResponseMessage>(HttpClient.SendAsync(request, token));
         }, cancellationToken);

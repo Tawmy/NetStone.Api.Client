@@ -17,17 +17,17 @@ internal class FreeCompanyRequests(NetStoneApiClientConfiguration configuration)
         return _apiHelper.SearchAsync<FreeCompanySearchPageDto, FreeCompanySearchQuery>(uri, query, cancellationToken);
     }
 
-    public Task<FreeCompanyDto> GetAsync(string lodestoneId, int? maxAge = null, bool useFallback = false,
+    public Task<FreeCompanyDtoV3> GetAsync(string lodestoneId, int? maxAge = null, bool useFallback = false,
         CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_freeCompanyRootUri, $"{lodestoneId}");
-        return _apiHelper.GetAsync<FreeCompanyDto>(uri, maxAge, useFallback, cancellationToken);
+        return _apiHelper.GetAsync<FreeCompanyDtoV3>(uri, maxAge, useFallback, cancellationToken);
     }
 
-    public Task<FreeCompanyMembersOuterDto> GetMembersAsync(string lodestoneId, int? maxAge = null,
+    public Task<FreeCompanyMembersOuterDtoV3> GetMembersAsync(string lodestoneId, int? maxAge = null,
         bool useFallback = false, CancellationToken cancellationToken = default)
     {
         var uri = new Uri(_freeCompanyRootUri, $"Members/{lodestoneId}");
-        return _apiHelper.GetAsync<FreeCompanyMembersOuterDto>(uri, maxAge, useFallback, cancellationToken);
+        return _apiHelper.GetAsync<FreeCompanyMembersOuterDtoV3>(uri, maxAge, useFallback, cancellationToken);
     }
 }

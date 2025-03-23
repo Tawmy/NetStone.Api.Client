@@ -8,18 +8,19 @@ public interface ICharacterRequests
     Task<CharacterSearchPageDto> SearchAsync(CharacterSearchQuery query, short page = 1,
         CancellationToken cancellationToken = default);
 
-    Task<CharacterDto> GetAsync(string lodestoneId, int? maxAge = null, bool useFallback = false,
+    Task<CharacterDtoV3> GetAsync(string lodestoneId, int? maxAge = null, bool useFallback = false,
         CancellationToken cancellationToken = default);
 
-    Task<CharacterClassJobOuterDto> GetClassJobsAsync(string lodestoneId, int? maxAge = null, bool useFallback = false,
+    Task<CharacterClassJobOuterDtoV3> GetClassJobsAsync(string lodestoneId, int? maxAge = null,
+        bool useFallback = false,
         CancellationToken cancellationToken = default);
 
-    Task<CollectionDto<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null,
+    Task<CollectionDtoV3<CharacterMinionDto>> GetMinionsAsync(string lodestoneId, int? maxAge = null,
         bool useFallback = false, CancellationToken cancellationToken = default);
 
-    Task<CollectionDto<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null,
+    Task<CollectionDtoV3<CharacterMountDto>> GetMountsAsync(string lodestoneId, int? maxAge = null,
         bool useFallback = false, CancellationToken cancellationToken = default);
 
-    Task<CharacterAchievementOuterDto> GetAchievementsAsync(string lodestoneId, int? maxAge = null,
+    Task<CharacterAchievementOuterDtoV3> GetAchievementsAsync(string lodestoneId, int? maxAge = null,
         bool useFallback = false, CancellationToken cancellationToken = default);
 }
