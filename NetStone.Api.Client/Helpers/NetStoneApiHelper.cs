@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using Microsoft.Identity.Client;
 using NetStone.Api.Client.Exceptions;
 using NetStone.Api.Client.Extensions;
+using NetStone.Common.Enums;
 using NetStone.Common.Exceptions;
 using Polly;
 using Polly.Retry;
@@ -68,17 +69,18 @@ internal class NetStoneApiHelper
         return builder.Build();
     }
 
-    public async Task<T> GetAsync<T>(Uri uri, int? maxAge, bool useFallback, CancellationToken cancellationToken)
+    public async Task<T> GetAsync<T>(Uri uri, int? maxAge, FallbackType useFallback,
+        CancellationToken cancellationToken)
     {
         if (maxAge is not null)
         {
             uri = new Uri($"{uri}?maxAge={maxAge}");
         }
 
-        if (useFallback)
+        if (useFallback is not FallbackType.None)
         {
             // TODO improve this bit, this is whack
-            uri = new Uri($"{uri}{(uri.Query.Contains('?') ? "&" : "?")}useFallback=true");
+            uri = new Uri($"{uri}{(uri.Query.Contains('?') ? "&" : "?")}useFallback={useFallback}");
         }
 
         return await SendAndHandleResponseAsync<T>(() => new HttpRequestMessage(HttpMethod.Get, uri),
